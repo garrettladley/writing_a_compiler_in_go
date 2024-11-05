@@ -51,8 +51,8 @@ func runVmTests(t *testing.T, tests []vmTestCase) {
 }
 
 func parse(input string) *ast.Program {
-	l := lexer.New(input)
-	p := parser.New(l)
+	_, tokens := lexer.New(input)
+	p := parser.New(&tokens)
 	return p.ParseProgram()
 }
 

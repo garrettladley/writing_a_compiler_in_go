@@ -52,7 +52,7 @@ func runCompilerTests(t *testing.T, tests []compilerTestCase) {
 			t.Fatalf("testInstructions failed: %s", err)
 		}
 
-		err = testConstants(t, tt.expectedConstants, bytecode.Constants)
+		err = testConstants(tt.expectedConstants, bytecode.Constants)
 		if err != nil {
 			t.Fatalf("testConstants failed: %s", err)
 		}
@@ -60,8 +60,8 @@ func runCompilerTests(t *testing.T, tests []compilerTestCase) {
 }
 
 func parse(input string) *ast.Program {
-	l := lexer.New(input)
-	p := parser.New(l)
+	_, tokens := lexer.New(input)
+	p := parser.New(&tokens)
 	return p.ParseProgram()
 }
 
@@ -97,7 +97,6 @@ func concatInstructions(s []code.Instructions) code.Instructions {
 }
 
 func testConstants(
-	t *testing.T,
 	expected []interface{},
 	actual []object.Object,
 ) error {
