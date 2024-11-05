@@ -112,4 +112,4 @@ jobs:
       - name: Run Tests with Coverage
         run: cd ./src/monkey && go test -v -race -coverprofile=coverage.txt ./...
       - name: Print Coverage
-        run: go tool cover -func=./src/monkey/coverage.txt
+        run: cd ./src/monkey && go tool cover -func=.coverage.txt
