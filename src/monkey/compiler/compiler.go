@@ -2,6 +2,7 @@ package compiler
 
 import (
 	"fmt"
+
 	"monkey/ast"
 	"monkey/code"
 	"monkey/object"

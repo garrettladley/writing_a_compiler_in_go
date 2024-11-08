@@ -2,6 +2,7 @@ package vm
 
 import (
 	"fmt"
+
 	"monkey/code"
 	"monkey/compiler"
 	"monkey/object"
@@ -9,9 +10,11 @@ import (
 
 const StackSize = 2048
 
-var True = &object.Boolean{Value: true}
-var False = &object.Boolean{Value: false}
-var Null = &object.Null{}
+var (
+	True  = &object.Boolean{Value: true}
+	False = &object.Boolean{Value: false}
+	Null  = &object.Null{}
+)
 
 type VM struct {
 	constants    []object.Object
