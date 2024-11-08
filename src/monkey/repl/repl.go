@@ -47,7 +47,7 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		stackTop := machine.StackTop()
+		stackTop := machine.LastPoppedStackElem()
 		if _, err := io.WriteString(out, stackTop.Inspect()); err != nil {
 			fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
 		}
