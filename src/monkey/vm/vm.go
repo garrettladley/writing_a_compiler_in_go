@@ -63,9 +63,11 @@ func (vm *VM) LastPoppedStackElem() object.Object {
 }
 
 func (vm *VM) Run() error {
-	var ip int
-	var ins code.Instructions
-	var op code.Opcode
+	var (
+		ip  int
+		ins code.Instructions
+		op  code.Opcode
+	)
 
 	for vm.currentFrame().ip < len(vm.currentFrame().Instructions())-1 {
 		vm.currentFrame().ip++
