@@ -22,7 +22,7 @@ func Start(in io.Reader, out io.Writer) {
 	symbolTable := compiler.NewSymbolTable()
 
 	for {
-		fmt.Fprintf(out, PROMPT)
+		fmt.Print(out, PROMPT)
 		scanned := scanner.Scan()
 		if !scanned {
 			return
