@@ -7,6 +7,7 @@ import (
 
 	"monkey/compiler"
 	"monkey/lexer"
+	"monkey/object"
 	"monkey/parser"
 	"monkey/vm"
 )
@@ -16,8 +17,12 @@ const PROMPT = ">> "
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
 
+	constants := []object.Object{}
+	globals := make([]object.Object, vm.GlobalsSize)
+	symbolTable := compiler.NewSymbolTable()
+
 	for {
-		fmt.Print(out, PROMPT)
+		fmt.Fprintf(out, PROMPT)
 		scanned := scanner.Scan()
 		if !scanned {
 			return
@@ -33,27 +38,26 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		comp := compiler.New()
+		comp := compiler.NewWithState(symbolTable, constants)
 		err := comp.Compile(program)
 		if err != nil {
 			fmt.Fprintf(out, "Woops! Compilation failed:\n %s\n", err)
 			continue
 		}
 
-		machine := vm.New(comp.Bytecode())
+		code := comp.Bytecode()
+		constants = code.Constants
+
+		machine := vm.NewWithGlobalsStore(code, globals)
 		err = machine.Run()
 		if err != nil {
 			fmt.Fprintf(out, "Woops! Executing bytecode failed:\n %s\n", err)
 			continue
 		}
 
-		stackTop := machine.LastPoppedStackElem()
-		if _, err := io.WriteString(out, stackTop.Inspect()); err != nil {
-			fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
-		}
-		if _, err := io.WriteString(out, "\n"); err != nil {
-			fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
-		}
+		lastPopped := machine.LastPoppedStackElem()
+		io.WriteString(out, lastPopped.Inspect())
+		io.WriteString(out, "\n")
 	}
 }
 
@@ -71,18 +75,10 @@ const MONKEY_FACE = `            __,__
 `
 
 func printParserErrors(out io.Writer, errors []string) {
-	if _, err := io.WriteString(out, MONKEY_FACE); err != nil {
-		fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
-	}
-	if _, err := io.WriteString(out, "Woops! We ran into some monkey business here!\n"); err != nil {
-		fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
-	}
-	if _, err := io.WriteString(out, " parser errors:\n"); err != nil {
-		fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
-	}
+	io.WriteString(out, MONKEY_FACE)
+	io.WriteString(out, "Woops! We ran into some monkey business here!\n")
+	io.WriteString(out, " parser errors:\n")
 	for _, msg := range errors {
-		if _, err := io.WriteString(out, "\t"+msg+"\n"); err != nil {
-			fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
-		}
+		io.WriteString(out, "\t"+msg+"\n")
 	}
 }
