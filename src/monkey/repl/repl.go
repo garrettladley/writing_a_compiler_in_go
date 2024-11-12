@@ -56,8 +56,12 @@ func Start(in io.Reader, out io.Writer) {
 		}
 
 		lastPopped := machine.LastPoppedStackElem()
-		io.WriteString(out, lastPopped.Inspect())
-		io.WriteString(out, "\n")
+		if _, err := io.WriteString(out, lastPopped.Inspect()); err != nil {
+			fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
+		}
+		if _, err := io.WriteString(out, "\n"); err != nil {
+			fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
+		}
 	}
 }
 
@@ -75,10 +79,18 @@ const MONKEY_FACE = `            __,__
 `
 
 func printParserErrors(out io.Writer, errors []string) {
-	io.WriteString(out, MONKEY_FACE)
-	io.WriteString(out, "Woops! We ran into some monkey business here!\n")
-	io.WriteString(out, " parser errors:\n")
+	if _, err := io.WriteString(out, MONKEY_FACE); err != nil {
+		fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
+	}
+	if _, err := io.WriteString(out, "Woops! We ran into some monkey business here!\n"); err != nil {
+		fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
+	}
+	if _, err := io.WriteString(out, " parser errors:\n"); err != nil {
+		fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
+	}
 	for _, msg := range errors {
-		io.WriteString(out, "\t"+msg+"\n")
+		if _, err := io.WriteString(out, "\t"+msg+"\n"); err != nil {
+			fmt.Fprintf(out, "Woops! Writing to output failed:\n %s\n", err)
+		}
 	}
 }
