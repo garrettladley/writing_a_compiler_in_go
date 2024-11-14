@@ -12,6 +12,8 @@ import (
 )
 
 func TestIntegerArithmetic(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"1", 1},
 		{"2", 2},
@@ -36,6 +38,8 @@ func TestIntegerArithmetic(t *testing.T) {
 }
 
 func TestBooleanExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"true", true},
 		{"false", false},
@@ -69,6 +73,8 @@ func TestBooleanExpressions(t *testing.T) {
 }
 
 func TestConditionals(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"if (true) { 10 }", 10},
 		{"if (true) { 10 } else { 20 }", 10},
@@ -86,6 +92,8 @@ func TestConditionals(t *testing.T) {
 }
 
 func TestGlobalLetStatements(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"let one = 1; one", 1},
 		{"let one = 1; let two = 2; one + two", 3},
@@ -96,6 +104,8 @@ func TestGlobalLetStatements(t *testing.T) {
 }
 
 func TestStringExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{`"monkey"`, "monkey"},
 		{`"mon" + "key"`, "monkey"},
@@ -106,6 +116,8 @@ func TestStringExpressions(t *testing.T) {
 }
 
 func TestArrayLiterals(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"[]", []int{}},
 		{"[1, 2, 3]", []int{1, 2, 3}},
@@ -116,6 +128,8 @@ func TestArrayLiterals(t *testing.T) {
 }
 
 func TestHashLiterals(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			"{}", map[object.HashKey]int64{},
@@ -140,6 +154,8 @@ func TestHashLiterals(t *testing.T) {
 }
 
 func TestIndexExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"[1, 2, 3][1]", 2},
 		{"[1, 2, 3][0 + 2]", 3},
@@ -157,6 +173,8 @@ func TestIndexExpressions(t *testing.T) {
 }
 
 func TestCallingFunctionsWithoutArguments(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -188,6 +206,8 @@ func TestCallingFunctionsWithoutArguments(t *testing.T) {
 }
 
 func TestFunctionsWithReturnStatement(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -209,6 +229,8 @@ func TestFunctionsWithReturnStatement(t *testing.T) {
 }
 
 func TestFunctionsWithoutReturnValue(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -232,6 +254,8 @@ func TestFunctionsWithoutReturnValue(t *testing.T) {
 }
 
 func TestFirstClassFunctions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -257,6 +281,8 @@ func TestFirstClassFunctions(t *testing.T) {
 }
 
 func TestCallingFunctionsWithBindings(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -309,6 +335,8 @@ func TestCallingFunctionsWithBindings(t *testing.T) {
 }
 
 func TestCallingFunctionsWithArgumentsAndBindings(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -379,6 +407,8 @@ func TestCallingFunctionsWithArgumentsAndBindings(t *testing.T) {
 }
 
 func TestCallingFunctionsWithWrongArguments(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input:    `fn() { 1; }(1);`,
@@ -413,6 +443,219 @@ func TestCallingFunctionsWithWrongArguments(t *testing.T) {
 			t.Fatalf("wrong VM error: want=%q, got=%q", tt.expected, err)
 		}
 	}
+}
+
+func TestBuiltinFunctions(t *testing.T) {
+	t.Parallel()
+
+	tests := []vmTestCase{
+		{`len("")`, 0},
+		{`len("four")`, 4},
+		{`len("hello world")`, 11},
+		{
+			`len(1)`,
+			&object.Error{
+				Message: "argument to `len` not supported, got INTEGER",
+			},
+		},
+		{
+			`len("one", "two")`,
+			&object.Error{
+				Message: "wrong number of arguments. got=2, want=1",
+			},
+		},
+		{`len([1, 2, 3])`, 3},
+		{`len([])`, 0},
+		{`puts("hello", "world!")`, Null},
+		{`first([1, 2, 3])`, 1},
+		{`first([])`, Null},
+		{
+			`first(1)`,
+			&object.Error{
+				Message: "argument to `first` must be ARRAY, got INTEGER",
+			},
+		},
+		{`last([1, 2, 3])`, 3},
+		{`last([])`, Null},
+		{
+			`last(1)`,
+			&object.Error{
+				Message: "argument to `last` must be ARRAY, got INTEGER",
+			},
+		},
+		{`rest([1, 2, 3])`, []int{2, 3}},
+		{`rest([])`, Null},
+		{`push([], 1)`, []int{1}},
+		{
+			`push(1, 1)`,
+			&object.Error{
+				Message: "argument to `push` must be ARRAY, got INTEGER",
+			},
+		},
+	}
+
+	runVmTests(t, tests)
+}
+
+func TestClosures(t *testing.T) {
+	t.Parallel()
+
+	tests := []vmTestCase{
+		{
+			input: `
+		let newClosure = fn(a) {
+			fn() { a; };
+		};
+		let closure = newClosure(99);
+		closure();
+		`,
+			expected: 99,
+		},
+		{
+			input: `
+		let newAdder = fn(a, b) {
+			fn(c) { a + b + c };
+		};
+		let adder = newAdder(1, 2);
+		adder(8);
+		`,
+			expected: 11,
+		},
+		{
+			input: `
+		let newAdder = fn(a, b) {
+			let c = a + b;
+			fn(d) { c + d };
+		};
+		let adder = newAdder(1, 2);
+		adder(8);
+		`,
+			expected: 11,
+		},
+		{
+			input: `
+		let newAdderOuter = fn(a, b) {
+			let c = a + b;
+			fn(d) {
+				let e = d + c;
+				fn(f) { e + f; };
+			};
+		};
+		let newAdderInner = newAdderOuter(1, 2)
+		let adder = newAdderInner(3);
+		adder(8);
+		`,
+			expected: 14,
+		},
+		{
+			input: `
+		let a = 1;
+		let newAdderOuter = fn(b) {
+			fn(c) {
+				fn(d) { a + b + c + d };
+			};
+		};
+		let newAdderInner = newAdderOuter(2)
+		let adder = newAdderInner(3);
+		adder(8);
+		`,
+			expected: 14,
+		},
+		{
+			input: `
+		let newClosure = fn(a, b) {
+			let one = fn() { a; };
+			let two = fn() { b; };
+			fn() { one() + two(); };
+		};
+		let closure = newClosure(9, 90);
+		closure();
+		`,
+			expected: 99,
+		},
+	}
+
+	runVmTests(t, tests)
+}
+
+func TestRecursiveFunctions(t *testing.T) {
+	t.Parallel()
+
+	tests := []vmTestCase{
+		{
+			input: `
+		let countDown = fn(x) {
+			if (x == 0) {
+				return 0;
+			} else {
+				countDown(x - 1);
+			}
+		};
+		countDown(1);
+		`,
+			expected: 0,
+		},
+		{
+			input: `
+		let countDown = fn(x) {
+			if (x == 0) {
+				return 0;
+			} else {
+				countDown(x - 1);
+			}
+		};
+		let wrapper = fn() {
+			countDown(1);
+		};
+		wrapper();
+		`,
+			expected: 0,
+		},
+		{
+			input: `
+		let wrapper = fn() {
+			let countDown = fn(x) {
+				if (x == 0) {
+					return 0;
+				} else {
+					countDown(x - 1);
+				}
+			};
+			countDown(1);
+		};
+		wrapper();
+		`,
+			expected: 0,
+		},
+	}
+
+	runVmTests(t, tests)
+}
+
+func TestRecursiveFibonacci(t *testing.T) {
+	t.Parallel()
+
+	tests := []vmTestCase{
+		{
+			input: `
+		let fibonacci = fn(x) {
+			if (x == 0) {
+				return 0;
+			} else {
+				if (x == 1) {
+					return 1;
+				} else {
+					fibonacci(x - 1) + fibonacci(x - 2);
+				}
+			}
+		};
+		fibonacci(15);
+		`,
+			expected: 610,
+		},
+	}
+
+	runVmTests(t, tests)
 }
 
 type vmTestCase struct {
@@ -524,6 +767,17 @@ func testExpectedObject(
 			if err != nil {
 				t.Errorf("testIntegerObject failed: %s", err)
 			}
+		}
+
+	case *object.Error:
+		errObj, ok := actual.(*object.Error)
+		if !ok {
+			t.Errorf("object is not Error: %T (%+v)", actual, actual)
+			return
+		}
+		if errObj.Message != expected.Message {
+			t.Errorf("wrong error message. expected=%q, got=%q",
+				expected.Message, errObj.Message)
 		}
 	}
 }

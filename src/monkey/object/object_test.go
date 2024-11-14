@@ -3,6 +3,8 @@ package object
 import "testing"
 
 func TestStringHashKey(t *testing.T) {
+	t.Parallel()
+
 	hello1 := &String{Value: "Hello World"}
 	hello2 := &String{Value: "Hello World"}
 	diff1 := &String{Value: "My name is johnny"}
@@ -22,6 +24,8 @@ func TestStringHashKey(t *testing.T) {
 }
 
 func TestBooleanHashKey(t *testing.T) {
+	t.Parallel()
+
 	true1 := &Boolean{Value: true}
 	true2 := &Boolean{Value: true}
 	false1 := &Boolean{Value: false}
@@ -41,6 +45,8 @@ func TestBooleanHashKey(t *testing.T) {
 }
 
 func TestIntegerHashKey(t *testing.T) {
+	t.Parallel()
+
 	one1 := &Integer{Value: 1}
 	one2 := &Integer{Value: 1}
 	two1 := &Integer{Value: 2}

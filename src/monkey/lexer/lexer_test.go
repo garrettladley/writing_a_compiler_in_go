@@ -1,13 +1,14 @@
 package lexer
 
 import (
-	"fmt"
 	"testing"
 
 	"monkey/token"
 )
 
 func TestNextToken(t *testing.T) {
+	t.Parallel()
+
 	input := `let five = 5;
 let ten = 10;
 
@@ -147,8 +148,6 @@ macro(x, y) { x + y; };
 	index := 0
 	for token := range tokens {
 		if token.Type != tests[index].expectedType {
-			fmt.Println(token, tests[index])
-
 			t.Fatalf("tests[%d] - tokentype wrong. expected=%q, got=%q",
 				index, tests[index].expectedType, token.Type)
 		}

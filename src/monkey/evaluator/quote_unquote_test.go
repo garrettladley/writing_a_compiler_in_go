@@ -7,6 +7,8 @@ import (
 )
 
 func TestQuote(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected string
@@ -49,6 +51,8 @@ func TestQuote(t *testing.T) {
 }
 
 func TestQuoteUnquote(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected string
