@@ -1,7 +1,6 @@
 package lexer
 
 import (
-	"fmt"
 	"testing"
 
 	"monkey/token"
@@ -147,8 +146,6 @@ macro(x, y) { x + y; };
 	index := 0
 	for token := range tokens {
 		if token.Type != tests[index].expectedType {
-			fmt.Println(token, tests[index])
-
 			t.Fatalf("tests[%d] - tokentype wrong. expected=%q, got=%q",
 				index, tests[index].expectedType, token.Type)
 		}

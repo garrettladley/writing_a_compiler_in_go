@@ -305,7 +305,7 @@ func TestDefineAndResolveFunctionName(t *testing.T) {
 	global := NewSymbolTable()
 	global.DefineFunctionName("a")
 
-	expected := Symbol{Name: "a", Scope: FunctionScope, Index: 0}
+	expected := Symbol{Name: "a", Scope: FunctionScope, Index: 69}
 
 	result, ok := global.Resolve(expected.Name)
 	if !ok {
