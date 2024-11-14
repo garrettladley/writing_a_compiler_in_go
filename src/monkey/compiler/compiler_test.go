@@ -12,6 +12,8 @@ import (
 )
 
 func TestCompilerScopes(t *testing.T) {
+	t.Parallel()
+
 	compiler := New()
 	if compiler.scopeIndex != 0 {
 		t.Errorf("scopeIndex wrong. got=%d, want=%d", compiler.scopeIndex, 0)
@@ -76,6 +78,8 @@ func TestCompilerScopes(t *testing.T) {
 }
 
 func TestIntegerArithmetic(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input:             "1 + 2",
@@ -142,6 +146,8 @@ func TestIntegerArithmetic(t *testing.T) {
 }
 
 func TestBooleanExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input:             "true",
@@ -234,6 +240,8 @@ func TestBooleanExpressions(t *testing.T) {
 }
 
 func TestConditionals(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input: `
@@ -289,6 +297,8 @@ func TestConditionals(t *testing.T) {
 }
 
 func TestGlobalLetStatements(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input: `
@@ -338,6 +348,8 @@ func TestGlobalLetStatements(t *testing.T) {
 }
 
 func TestFunctions(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input: `fn() { return 5 + 10 }`,
@@ -428,6 +440,8 @@ func runCompilerTests(t *testing.T, tests []compilerTestCase) {
 }
 
 func TestStringExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input:             `"monkey"`,
@@ -453,6 +467,8 @@ func TestStringExpressions(t *testing.T) {
 }
 
 func TestArrayLiterals(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input:             "[]",
@@ -496,6 +512,8 @@ func TestArrayLiterals(t *testing.T) {
 }
 
 func TestHashLiterals(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input:             "{}",
@@ -541,6 +559,8 @@ func TestHashLiterals(t *testing.T) {
 }
 
 func TestIndexExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input:             "[1, 2, 3][1 + 1]",
@@ -577,6 +597,8 @@ func TestIndexExpressions(t *testing.T) {
 }
 
 func TestFunctionsWithoutReturnValue(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input: `fn() { }`,
@@ -596,6 +618,8 @@ func TestFunctionsWithoutReturnValue(t *testing.T) {
 }
 
 func TestFunctionCalls(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input: `fn() { 24 }();`,
@@ -688,6 +712,8 @@ func TestFunctionCalls(t *testing.T) {
 }
 
 func TestLetStatementScopes(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input: `
@@ -762,6 +788,8 @@ func TestLetStatementScopes(t *testing.T) {
 }
 
 func TestBuiltins(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input: `
@@ -802,6 +830,8 @@ func TestBuiltins(t *testing.T) {
 }
 
 func TestClosures(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input: `
@@ -929,6 +959,8 @@ func TestClosures(t *testing.T) {
 }
 
 func TestRecursiveFunctions(t *testing.T) {
+	t.Parallel()
+
 	tests := []compilerTestCase{
 		{
 			input: `

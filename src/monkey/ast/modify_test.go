@@ -6,6 +6,8 @@ import (
 )
 
 func TestModify(t *testing.T) {
+	t.Parallel()
+
 	one := func() Expression { return &IntegerLiteral{Value: 1} }
 	two := func() Expression { return &IntegerLiteral{Value: 2} }
 

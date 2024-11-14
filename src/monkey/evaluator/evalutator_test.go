@@ -9,6 +9,8 @@ import (
 )
 
 func TestEvalIntegerExpression(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected int64
@@ -37,6 +39,8 @@ func TestEvalIntegerExpression(t *testing.T) {
 }
 
 func TestEvalBooleanExpression(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected bool
@@ -69,6 +73,8 @@ func TestEvalBooleanExpression(t *testing.T) {
 }
 
 func TestBangOperator(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected bool
@@ -88,6 +94,8 @@ func TestBangOperator(t *testing.T) {
 }
 
 func TestIfElseExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected interface{}
@@ -113,6 +121,8 @@ func TestIfElseExpressions(t *testing.T) {
 }
 
 func TestReturnStatements(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected int64
@@ -162,6 +172,8 @@ f(10);`,
 }
 
 func TestErrorHandling(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input           string
 		expectedMessage string
@@ -242,6 +254,8 @@ if (10 > 1) {
 }
 
 func TestLetStatements(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected int64
@@ -258,6 +272,8 @@ func TestLetStatements(t *testing.T) {
 }
 
 func TestFunctionObject(t *testing.T) {
+	t.Parallel()
+
 	input := "fn(x) { x + 2; };"
 
 	evaluated := testEval(input)
@@ -283,6 +299,8 @@ func TestFunctionObject(t *testing.T) {
 }
 
 func TestFunctionApplication(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected int64
@@ -301,6 +319,8 @@ func TestFunctionApplication(t *testing.T) {
 }
 
 func TestEnclosingEnvironments(t *testing.T) {
+	t.Parallel()
+
 	input := `
 let first = 10;
 let second = 10;
@@ -318,6 +338,8 @@ ourFunction(20) + first + second;`
 }
 
 func TestClosures(t *testing.T) {
+	t.Parallel()
+
 	input := `
 let newAdder = fn(x) {
   fn(y) { x + y };
@@ -330,6 +352,8 @@ addTwo(2);`
 }
 
 func TestStringLiteral(t *testing.T) {
+	t.Parallel()
+
 	input := `"Hello World!"`
 
 	evaluated := testEval(input)
@@ -344,6 +368,8 @@ func TestStringLiteral(t *testing.T) {
 }
 
 func TestStringConcatenation(t *testing.T) {
+	t.Parallel()
+
 	input := `"Hello" + " " + "World!"`
 
 	evaluated := testEval(input)
@@ -358,6 +384,8 @@ func TestStringConcatenation(t *testing.T) {
 }
 
 func TestBuiltinFunctions(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected interface{}
@@ -422,6 +450,8 @@ func TestBuiltinFunctions(t *testing.T) {
 }
 
 func TestArrayLiterals(t *testing.T) {
+	t.Parallel()
+
 	input := "[1, 2 * 2, 3 + 3]"
 
 	evaluated := testEval(input)
@@ -441,6 +471,8 @@ func TestArrayLiterals(t *testing.T) {
 }
 
 func TestArrayIndexExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected interface{}
@@ -499,6 +531,8 @@ func TestArrayIndexExpressions(t *testing.T) {
 }
 
 func TestHashLiterals(t *testing.T) {
+	t.Parallel()
+
 	input := `let two = "two";
 	{
 		"one": 10 - 9,
@@ -539,6 +573,8 @@ func TestHashLiterals(t *testing.T) {
 }
 
 func TestHashIndexExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected interface{}

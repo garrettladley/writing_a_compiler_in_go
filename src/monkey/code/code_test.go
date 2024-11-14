@@ -3,6 +3,8 @@ package code
 import "testing"
 
 func TestMake(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		op       Opcode
 		operands []int
@@ -32,6 +34,8 @@ func TestMake(t *testing.T) {
 }
 
 func TestInstructionsString(t *testing.T) {
+	t.Parallel()
+
 	instructions := []Instructions{
 		Make(OpAdd),
 		Make(OpGetLocal, 1),
@@ -59,6 +63,8 @@ func TestInstructionsString(t *testing.T) {
 }
 
 func TestReadOperands(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		op        Opcode
 		operands  []int

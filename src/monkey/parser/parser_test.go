@@ -9,6 +9,8 @@ import (
 )
 
 func TestLetStatements(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input              string
 		expectedIdentifier string
@@ -43,6 +45,8 @@ func TestLetStatements(t *testing.T) {
 }
 
 func TestReturnStatements(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input         string
 		expectedValue interface{}
@@ -79,6 +83,8 @@ func TestReturnStatements(t *testing.T) {
 }
 
 func TestIdentifierExpression(t *testing.T) {
+	t.Parallel()
+
 	input := "foobar;"
 
 	_, tokens := lexer.New(input)
@@ -110,6 +116,8 @@ func TestIdentifierExpression(t *testing.T) {
 }
 
 func TestIntegerLiteralExpression(t *testing.T) {
+	t.Parallel()
+
 	input := "5;"
 
 	_, tokens := lexer.New(input)
@@ -141,6 +149,8 @@ func TestIntegerLiteralExpression(t *testing.T) {
 }
 
 func TestParsingPrefixExpressions(t *testing.T) {
+	t.Parallel()
+
 	prefixTests := []struct {
 		input    string
 		operator string
@@ -186,6 +196,8 @@ func TestParsingPrefixExpressions(t *testing.T) {
 }
 
 func TestParsingInfixExpressions(t *testing.T) {
+	t.Parallel()
+
 	infixTests := []struct {
 		input      string
 		leftValue  interface{}
@@ -238,6 +250,8 @@ func TestParsingInfixExpressions(t *testing.T) {
 }
 
 func TestOperatorPrecedenceParsing(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected string
@@ -366,6 +380,8 @@ func TestOperatorPrecedenceParsing(t *testing.T) {
 }
 
 func TestBooleanExpression(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input           string
 		expectedBoolean bool
@@ -403,6 +419,8 @@ func TestBooleanExpression(t *testing.T) {
 }
 
 func TestIfExpression(t *testing.T) {
+	t.Parallel()
+
 	input := `if (x < y) { x }`
 
 	_, tokens := lexer.New(input)
@@ -452,6 +470,8 @@ func TestIfExpression(t *testing.T) {
 }
 
 func TestIfElseExpression(t *testing.T) {
+	t.Parallel()
+
 	input := `if (x < y) { x } else { y }`
 
 	_, tokens := lexer.New(input)
@@ -511,6 +531,8 @@ func TestIfElseExpression(t *testing.T) {
 }
 
 func TestFunctionLiteralParsing(t *testing.T) {
+	t.Parallel()
+
 	input := `fn(x, y) { x + y; }`
 
 	_, tokens := lexer.New(input)
@@ -558,6 +580,8 @@ func TestFunctionLiteralParsing(t *testing.T) {
 }
 
 func TestFunctionParameterParsing(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input          string
 		expectedParams []string
@@ -588,6 +612,8 @@ func TestFunctionParameterParsing(t *testing.T) {
 }
 
 func TestCallExpressionParsing(t *testing.T) {
+	t.Parallel()
+
 	input := "add(1, 2 * 3, 4 + 5);"
 
 	_, tokens := lexer.New(input)
@@ -626,6 +652,8 @@ func TestCallExpressionParsing(t *testing.T) {
 }
 
 func TestCallExpressionParameterParsing(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input         string
 		expectedIdent string
@@ -680,6 +708,8 @@ func TestCallExpressionParameterParsing(t *testing.T) {
 }
 
 func TestStringLiteralExpression(t *testing.T) {
+	t.Parallel()
+
 	input := `"hello world";`
 
 	_, tokens := lexer.New(input)
@@ -699,6 +729,8 @@ func TestStringLiteralExpression(t *testing.T) {
 }
 
 func TestParsingEmptyArrayLiterals(t *testing.T) {
+	t.Parallel()
+
 	input := "[]"
 
 	_, tokens := lexer.New(input)
@@ -722,6 +754,8 @@ func TestParsingEmptyArrayLiterals(t *testing.T) {
 }
 
 func TestParsingArrayLiterals(t *testing.T) {
+	t.Parallel()
+
 	input := "[1, 2 * 2, 3 + 3]"
 
 	_, tokens := lexer.New(input)
@@ -749,6 +783,8 @@ func TestParsingArrayLiterals(t *testing.T) {
 }
 
 func TestParsingIndexExpressions(t *testing.T) {
+	t.Parallel()
+
 	input := "myArray[1 + 1]"
 
 	_, tokens := lexer.New(input)
@@ -776,6 +812,8 @@ func TestParsingIndexExpressions(t *testing.T) {
 }
 
 func TestParsingEmptyHashLiteral(t *testing.T) {
+	t.Parallel()
+
 	input := "{}"
 
 	_, tokens := lexer.New(input)
@@ -795,6 +833,8 @@ func TestParsingEmptyHashLiteral(t *testing.T) {
 }
 
 func TestParsingHashLiteralsStringKeys(t *testing.T) {
+	t.Parallel()
+
 	input := `{"one": 1, "two": 2, "three": 3}`
 
 	_, tokens := lexer.New(input)
@@ -831,6 +871,8 @@ func TestParsingHashLiteralsStringKeys(t *testing.T) {
 }
 
 func TestParsingHashLiteralsBooleanKeys(t *testing.T) {
+	t.Parallel()
+
 	input := `{true: 1, false: 2}`
 
 	_, tokens := lexer.New(input)
@@ -866,6 +908,8 @@ func TestParsingHashLiteralsBooleanKeys(t *testing.T) {
 }
 
 func TestParsingHashLiteralsIntegerKeys(t *testing.T) {
+	t.Parallel()
+
 	input := `{1: 1, 2: 2, 3: 3}`
 
 	_, tokens := lexer.New(input)
@@ -903,6 +947,8 @@ func TestParsingHashLiteralsIntegerKeys(t *testing.T) {
 }
 
 func TestParsingHashLiteralsWithExpressions(t *testing.T) {
+	t.Parallel()
+
 	input := `{"one": 0 + 1, "two": 10 - 8, "three": 15 / 5}`
 
 	_, tokens := lexer.New(input)
@@ -950,6 +996,8 @@ func TestParsingHashLiteralsWithExpressions(t *testing.T) {
 }
 
 func TestMacroLiteralParsing(t *testing.T) {
+	t.Parallel()
+
 	input := `macro(x, y) { x + y; }`
 
 	_, tokens := lexer.New(input)
@@ -997,6 +1045,8 @@ func TestMacroLiteralParsing(t *testing.T) {
 }
 
 func TestFunctionLiteralWithName(t *testing.T) {
+	t.Parallel()
+
 	input := `let myFunction = fn() { };`
 
 	_, tokens := lexer.New(input)

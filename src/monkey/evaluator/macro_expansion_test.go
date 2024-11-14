@@ -10,6 +10,8 @@ import (
 )
 
 func TestDefineMacros(t *testing.T) {
+	t.Parallel()
+
 	input := `
 	let number = 1;
 	let function = fn(x, y) { x + y };
@@ -66,6 +68,8 @@ func TestDefineMacros(t *testing.T) {
 }
 
 func TestExpandMacros(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		input    string
 		expected string

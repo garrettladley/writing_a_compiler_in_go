@@ -3,6 +3,8 @@ package compiler
 import "testing"
 
 func TestDefine(t *testing.T) {
+	t.Parallel()
+
 	expected := map[string]Symbol{
 		"a": {Name: "a", Scope: GlobalScope, Index: 0},
 		"b": {Name: "b", Scope: GlobalScope, Index: 1},
@@ -50,6 +52,8 @@ func TestDefine(t *testing.T) {
 }
 
 func TestResolveGlobal(t *testing.T) {
+	t.Parallel()
+
 	global := NewSymbolTable()
 	global.Define("a")
 	global.Define("b")
@@ -73,6 +77,8 @@ func TestResolveGlobal(t *testing.T) {
 }
 
 func TestResolveLocal(t *testing.T) {
+	t.Parallel()
+
 	global := NewSymbolTable()
 	global.Define("a")
 	global.Define("b")
@@ -102,6 +108,8 @@ func TestResolveLocal(t *testing.T) {
 }
 
 func TestResolveNestedLocal(t *testing.T) {
+	t.Parallel()
+
 	global := NewSymbolTable()
 	global.Define("a")
 	global.Define("b")
@@ -154,6 +162,8 @@ func TestResolveNestedLocal(t *testing.T) {
 }
 
 func TestDefineResolveBuiltins(t *testing.T) {
+	t.Parallel()
+
 	global := NewSymbolTable()
 	firstLocal := NewEnclosedSymbolTable(global)
 	secondLocal := NewEnclosedSymbolTable(firstLocal)
@@ -185,6 +195,8 @@ func TestDefineResolveBuiltins(t *testing.T) {
 }
 
 func TestResolveFree(t *testing.T) {
+	t.Parallel()
+
 	global := NewSymbolTable()
 	global.Define("a")
 	global.Define("b")
@@ -259,6 +271,8 @@ func TestResolveFree(t *testing.T) {
 }
 
 func TestResolveUnresolvableFree(t *testing.T) {
+	t.Parallel()
+
 	global := NewSymbolTable()
 	global.Define("a")
 
@@ -302,6 +316,8 @@ func TestResolveUnresolvableFree(t *testing.T) {
 }
 
 func TestDefineAndResolveFunctionName(t *testing.T) {
+	t.Parallel()
+
 	global := NewSymbolTable()
 	global.DefineFunctionName("a")
 
@@ -319,6 +335,8 @@ func TestDefineAndResolveFunctionName(t *testing.T) {
 }
 
 func TestShadowingFunctionName(t *testing.T) {
+	t.Parallel()
+
 	global := NewSymbolTable()
 	global.DefineFunctionName("a")
 	global.Define("a")

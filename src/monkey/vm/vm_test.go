@@ -12,6 +12,8 @@ import (
 )
 
 func TestIntegerArithmetic(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"1", 1},
 		{"2", 2},
@@ -36,6 +38,8 @@ func TestIntegerArithmetic(t *testing.T) {
 }
 
 func TestBooleanExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"true", true},
 		{"false", false},
@@ -69,6 +73,8 @@ func TestBooleanExpressions(t *testing.T) {
 }
 
 func TestConditionals(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"if (true) { 10 }", 10},
 		{"if (true) { 10 } else { 20 }", 10},
@@ -86,6 +92,8 @@ func TestConditionals(t *testing.T) {
 }
 
 func TestGlobalLetStatements(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"let one = 1; one", 1},
 		{"let one = 1; let two = 2; one + two", 3},
@@ -96,6 +104,8 @@ func TestGlobalLetStatements(t *testing.T) {
 }
 
 func TestStringExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{`"monkey"`, "monkey"},
 		{`"mon" + "key"`, "monkey"},
@@ -106,6 +116,8 @@ func TestStringExpressions(t *testing.T) {
 }
 
 func TestArrayLiterals(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"[]", []int{}},
 		{"[1, 2, 3]", []int{1, 2, 3}},
@@ -116,6 +128,8 @@ func TestArrayLiterals(t *testing.T) {
 }
 
 func TestHashLiterals(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			"{}", map[object.HashKey]int64{},
@@ -140,6 +154,8 @@ func TestHashLiterals(t *testing.T) {
 }
 
 func TestIndexExpressions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{"[1, 2, 3][1]", 2},
 		{"[1, 2, 3][0 + 2]", 3},
@@ -157,6 +173,8 @@ func TestIndexExpressions(t *testing.T) {
 }
 
 func TestCallingFunctionsWithoutArguments(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -188,6 +206,8 @@ func TestCallingFunctionsWithoutArguments(t *testing.T) {
 }
 
 func TestFunctionsWithReturnStatement(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -209,6 +229,8 @@ func TestFunctionsWithReturnStatement(t *testing.T) {
 }
 
 func TestFunctionsWithoutReturnValue(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -232,6 +254,8 @@ func TestFunctionsWithoutReturnValue(t *testing.T) {
 }
 
 func TestFirstClassFunctions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -257,6 +281,8 @@ func TestFirstClassFunctions(t *testing.T) {
 }
 
 func TestCallingFunctionsWithBindings(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -309,6 +335,8 @@ func TestCallingFunctionsWithBindings(t *testing.T) {
 }
 
 func TestCallingFunctionsWithArgumentsAndBindings(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -379,6 +407,8 @@ func TestCallingFunctionsWithArgumentsAndBindings(t *testing.T) {
 }
 
 func TestCallingFunctionsWithWrongArguments(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input:    `fn() { 1; }(1);`,
@@ -416,6 +446,8 @@ func TestCallingFunctionsWithWrongArguments(t *testing.T) {
 }
 
 func TestBuiltinFunctions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{`len("")`, 0},
 		{`len("four")`, 4},
@@ -466,6 +498,8 @@ func TestBuiltinFunctions(t *testing.T) {
 }
 
 func TestClosures(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -545,6 +579,8 @@ func TestClosures(t *testing.T) {
 }
 
 func TestRecursiveFunctions(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
@@ -597,6 +633,8 @@ func TestRecursiveFunctions(t *testing.T) {
 }
 
 func TestRecursiveFibonacci(t *testing.T) {
+	t.Parallel()
+
 	tests := []vmTestCase{
 		{
 			input: `
