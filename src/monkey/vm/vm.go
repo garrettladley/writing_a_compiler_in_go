@@ -539,12 +539,10 @@ func (vm *VM) callBuiltin(builtin *object.Builtin, numArgs int) error {
 	vm.sp = vm.sp - numArgs - 1
 
 	if result != nil {
-		vm.push(result)
+		return vm.push(result)
 	} else {
-		vm.push(Null)
+		return vm.push(Null)
 	}
-
-	return nil
 }
 
 func (vm *VM) pushClosure(constIndex, numFree int) error {

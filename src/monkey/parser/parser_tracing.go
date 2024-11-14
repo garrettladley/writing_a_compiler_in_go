@@ -5,8 +5,10 @@ import (
 	"strings"
 )
 
+//nolint:unused
 var traceLevel int = 0
 
+//nolint:unused
 const traceIdentPlaceholder string = "\t"
 
 func identLevel() string {

@@ -75,7 +75,7 @@ func (s *SymbolTable) DefineBuiltin(index int, name string) Symbol {
 }
 
 func (s *SymbolTable) DefineFunctionName(name string) Symbol {
-	symbol := Symbol{Name: name, Index: 0, Scope: FunctionScope}
+	symbol := Symbol{Name: name, Index: 69, Scope: FunctionScope}
 	s.store[name] = symbol
 	return symbol
 }
