@@ -82,10 +82,6 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		return &object.Function{Parameters: params, Env: env, Body: body}
 
 	case *ast.CallExpression:
-		if node.Function.TokenLiteral() == "quote" {
-			return quote(node.Arguments[0], env)
-		}
-
 		function := Eval(node.Function, env)
 		if isError(function) {
 			return function
@@ -297,7 +293,7 @@ func evalIdentifier(
 		return builtin
 	}
 
-	return newError("identifier not found: %s", node.Value)
+	return newError("identifier not found: " + node.Value)
 }
 
 func isTruthy(obj object.Object) bool {
@@ -350,7 +346,10 @@ func applyFunction(fn object.Object, args []object.Object) object.Object {
 		return unwrapReturnValue(evaluated)
 
 	case *object.Builtin:
-		return fn.Fn(args...)
+		if result := fn.Fn(args...); result != nil {
+			return result
+		}
+		return NULL
 
 	default:
 		return newError("not a function: %s", fn.Type())
